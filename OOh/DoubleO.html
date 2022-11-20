@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title></title>
+<script>
+    class Drawing{
+        constructor(canvasId){
+            this.c = document.getElementById(canvasId);
+            this.ctx = this.c.getContext("2d");
+            
+        }
+        
+        draw(shapes) {
+            var that=this;
+            shapes.forEach(function(shape) {
+                shape.draw(that.ctx);
+            });
+        }
+        
+    }
+    
+    class Circle{
+        constructor(coords, radius){
+            this.coords=coords;
+            this.radius=radius;
+        }
+        
+        draw(ctx){
+            ctx.fillStyle="#048480";
+            ctx.arc(this.coords[0], this.coords[1], this.radius, 0, 2 * Math.PI, false);
+            ctx.fill();
+        }
+    }
+    
+    class Rectangle{
+        constructor(coords,width,height){
+            this.coords=coords;
+            this.width=width;
+            this.height=height;
+        }
+        
+        draw(ctx){
+            ctx.fillStyle="#000000";
+            ctx.fillRect(this.coords[0],this.coords[1],this.width,this.height);
+        }
+    }
+</script>
+    
+</head>
+<body>
+<canvas id='canvas'>
+</canvas>
+<canvas id='canvas2'>
+</canvas>
+<script>
+    const shapes=[new Rectangle([20,20],30,45),new Circle([60,60],25)];
+    const app=new Drawing('canvas');
+    app.draw(shapes);
+    const app2=new Drawing('canvas2');
+    app2.draw(shapes);
+    
+</script>
+
+</body>
+</html>

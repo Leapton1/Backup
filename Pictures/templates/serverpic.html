@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<meta charset="utf-8" />
+</head>
+<body> 
+<div class="bd-example" align="middle">
+
+<script>
+ImageSwitch=[["{{url_for('static', filename='Circlebounce4.png')}}",1],["{{url_for('static', filename='Circlebounce1.png')}}",2],["{{url_for('static', filename='Circlebounce2.png')}}",3],["{{url_for('static', filename='Circlebounce3.png')}}",4],["{{url_for('static', filename='Circlebounce2.png')}}",5],["{{url_for('static', filename='Circlebounce1.png')}}",0]];
+</script>
+
+<img src="{{url_for('static', filename='lemonTree.jpg')}}" align="middle" width="500" height="600" id="image"/>
+<script>
+display = document.getElementById("image");
+//ImageSwitch=["{{url_for('static', filename='lemonTree.jpg')}}","{{url_for('static', filename='What-to-do-with-lemons.jpg')}}"];
+display.src=ImageSwitch[0][0];
+
+i = 1;
+
+function change() {
+    display.src=ImageSwitch[i][0];
+    i=ImageSwitch[i][1];
+}
+
+setInterval(change, 200);
+
+</script>        
+</div>
+</body>
+</html>

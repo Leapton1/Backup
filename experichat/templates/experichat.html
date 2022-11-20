@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>lemon</title>
+</head>
+<body>
+    <p id="maintext">A chat website</p>
+    <h1>Hello</h1>
+    <script>
+        function fetchFromApi(elementId) {
+          fetch('/api')
+          .then(
+            function(response) {
+              return response.json();
+            })
+          .then(
+            function(body) {
+              console.log(body);
+              const element = document.getElementById(elementId);
+              element.textContent="";
+              for (i = 0; i < body.length; i++) {
+              element.textContent += `${body[i][0]} : ${body[i][1]}\n`;
+              }
+            });
+        }
+        
+        massage=['getfyg'];
+    </script>
+    
+    <button id="fetch" onclick="fetchFromApi('data');">Refresh</button>
+    
+    <button id="flotch" onclick="
+    
+    var usernam=window.prompt('enter your name:');
+    var messag=window.prompt('What ist thou message?!');
+    massage=[usernam,messag];
+    
+     fetch(
+           '/postman', 
+           {
+             method: 'POST',
+             headers: {
+              'Content-type': 'application/json',
+              'Accept': 'application/json'
+             },
+             // Strigify the payload into JSON:
+             body:JSON.stringify(massage)
+           }
+          ).then(res=>{
+             if(res.ok) {
+               return res.json();
+             } else {
+               alert('something is wrong');
+             }
+           }
+          ).then(jsonResponse=>{
+ 
+ // Log the response data in the console
+ console.log(jsonResponse);
+ } 
+ ).catch((err) => console.error(err));
+    
+    ">Send a message</button>
+    <pre id="data"></pre>
+</body>
+</html>

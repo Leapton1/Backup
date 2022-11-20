@@ -1,0 +1,69 @@
+<canvas id="DemoCanvas" width="1000" height="1000"></canvas>  
+<script>
+    
+angley=1.3;
+    
+point1=[100,100,100];
+point2=[200,100,100];
+
+//points=[[100,100,100,1],[200,100,100,1],[200,200,100,1],[100,200,100,1],
+//        [100,100,200,1],[200,100,200,1],[200,200,200,1],[100,200,200,1]];
+
+points=[[0,0,0,1],[100,0,0,1],[100,100,0,1],[0,100,0,1],
+        [0,0,100,1],[100,0,100,1],[100,100,100,1],[0,100,100,1]];
+
+t=[1,1,1];
+    
+thing=[[1,0,0,t[0]],[0,1,0,t[1]],[0,0,1,t[2]],[0,0,0,1]];
+
+function threedline(point1,point2,angle){
+    
+    //ctx.moveTo(Math.multiply(Math.matrix(thing),Math.matrix(point1)),1);
+    //ctx.lineTo(2,2);
+    //ctx.stroke();
+    
+    ctx.moveTo(300+ (point1[0]*Math.cos(angle))+(point1[1]*-Math.sin(angle)) +(point1[2]/2) , 300+ (Math.sin(angle)*point1[0])+(point1[1]*Math.cos(angle)) +(point1[2]/2) );
+	ctx.lineTo(300+ (point2[0]*Math.cos(angle))+(point2[1]*-Math.sin(angle)) +(point2[2]/2) , 300+ (Math.sin(angle)*point2[0])+(point2[1]*Math.cos(angle)) +(point2[2]/2) );
+	ctx.stroke();
+    
+}
+
+function drawcube(angle){
+    
+    threedline(points[0],points[1],angle);
+    threedline(points[1],points[2],angle);
+    threedline(points[2],points[3],angle);
+    threedline(points[3],points[0],angle);
+    threedline(points[4],points[5],angle);
+    threedline(points[5],points[6],angle);
+    threedline(points[6],points[7],angle);
+    threedline(points[7],points[4],angle);
+    threedline(points[0],points[4],angle);
+    threedline(points[1],points[5],angle);
+    threedline(points[2],points[6],angle);
+    threedline(points[3],points[7],angle);
+    //threedline([150,150,150],[0,0,0],angle);
+    
+}
+
+function newcube(){
+    
+    canvas.width = canvas.width;
+    //ctx.clearRect(0, 0, canvas.width, canvas.height);
+    //ctx.clear();
+    drawcube(angley);
+    angley=angley-0.1;
+    
+}
+    
+    
+var canvas = document.getElementById('DemoCanvas');
+if (canvas.getContext) 
+    {
+        var ctx = canvas.getContext("2d");
+        
+        setInterval(newcube, 100);
+        
+        
+    } 
+</script>  

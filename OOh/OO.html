@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+    <head>
+        <title>
+            OO
+        </title>
+        <script>
+            class Point {
+                constructor(x, y) {
+                    this.x = x;
+                    this.y = y;
+                }
+                
+                draw(ctx) {
+                    ctx.fillStyle="#000000";
+                    ctx.fillRect(this.x, this.y, 5, 5);
+               }
+            }
+            
+            class Line {
+                constructor(x1,y1,x2,y2) {
+                    this.start = new Point(x1, y1);
+                    this.end = new Point(x2, y2);
+                }
+                
+                draw(ctx) {
+                    this.start.draw(ctx);
+                    this.end.draw(ctx);
+                    ctx.beginPath(); 
+                    ctx.moveTo(this.start.x, this.start.y);
+                    ctx.lineTo(this.end.x, this.end.y);
+                    ctx.stroke();
+                }
+            }
+            
+            class Rectangle {
+                constructor(x1,y1,x2,y2) {
+                    this.lines=[new Line(x1,y1,x2,y1),new Line(x2,y1,x2,y2),new Line(x2,y2,x1,y2),new Line(x1,y2,x1,y1)];
+                }
+                
+                draw(ctx) {
+                    for (const line of this.lines) {
+                        line.draw(ctx);
+                    }
+                }
+                
+            }
+            
+            function drawscene(ctx,scene) {
+                for (const thing of scene) {
+                    thing.draw(ctx);
+                }
+            }
+            
+        </script>
+    </head>
+    <body>
+        
+    <canvas id="canvas">    
+    <script>
+        canvas=document.getElementById("canvas");
+        ctx = canvas.getContext("2d");
+        p1 = new Point(3, 4);
+        line = new Line(2,2,88,88);
+        square = new Rectangle(2,2,88,88);
+        square2 = new Rectangle(22,22,888,888);
+        drawscene(ctx,[p1,line,square,square2]);
+    </script>
+    
+    </body>
+    
+    
+    
+</html>

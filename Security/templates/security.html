@@ -1,0 +1,42 @@
+
+
+
+<label for="email">email:</label><br>
+<input type="text" id="email" name="email"><br>
+<label for="password">password:</label><br>
+<input type="password" id="password" name="password">
+
+
+
+    <button id="flotch" onclick="
+    
+    var usernam=document.getElementById('email').value;
+    var messag=document.getElementById('password').value;
+    massage=[usernam,messag];
+    
+     fetch(
+           '/postman', 
+           {
+             method: 'POST',
+             headers: {
+              'Content-type': 'application/json',
+              'Accept': 'application/json'
+             },
+             // Strigify the payload into JSON:
+             body:JSON.stringify(massage)
+           }
+          ).then(res=>{
+             if(res.ok) {
+               return res.json();
+             } else {
+               alert('something is wrong');
+             }
+           }
+          ).then(jsonResponse=>{
+ 
+ // Log the response data in the console
+ console.log(jsonResponse);
+ } 
+ ).catch((err) => console.error(err));
+    
+    ">Verify</button>

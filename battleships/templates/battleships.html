@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<canvas style="display: block" id="myCanvas" width="1200" height="600"></canvas>
+<script>
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+    phase=1;
+    shiptracker=0;
+    
+    shipstoplace=[[[2,0],[1,0],[0,0],[-1,0],[-2,0]],[[0,0],[-1,0],[-2,0],[-2,1]],[[0,0]],[[0,0]]];
+    rotation=[0,1,1,1];
+    yourships=[[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]];
+    
+    function shipboard(board,pos){
+        var y;
+        var x;
+        for (x = 0; x < board.length; x++) {
+           for (y = 0; y < board[x].length; y++) {
+            if(board[x][y]==0){
+             ctx.fillStyle="#000000";
+             ctx.fillRect((x*40),(y*40),40,40+pos);
+             ctx.fillStyle="#009688";
+             ctx.fillRect((x*40)+2,(y*40)+2,36,36);
+            }
+            else if(board[x][y]==1){
+             ctx.fillStyle="#000000";
+             ctx.fillRect((x*40),(y*40),40,40+pos);
+             ctx.fillStyle="#009758";
+             ctx.fillRect((x*40)+2,(y*40)+2,36,36);
+            }
+            else if(board[x][y]==2){
+             ctx.fillStyle="#000000";
+             ctx.fillRect((x*40),(y*40),40,40+pos);
+             ctx.fillStyle="#004567";
+             ctx.fillRect((x*40)+2,(y*40)+2,36,36);
+            }
+        }}
+    }
+    
+    shipboard(yourships,0);
+    
+    function drawships(ctx,ship,rotation){
+        for (i = 0; i < shipstoplace[ship].length; i++) {
+            ctx.fillStyle="#000000";
+            ctx.fillRect((shipstoplace[ship][i][rotation[0]]*40*rotation[2])+200,(shipstoplace[ship][i][rotation[1]]*40*rotation[3])+500,40,40);
+            ctx.fillStyle="#009758";
+            ctx.fillRect((shipstoplace[ship][i][rotation[0]]*40*rotation[2])+202,(shipstoplace[ship][i][rotation[1]]*40*rotation[3])+502,36,36);
+            ctx.fillStyle="#0fffff";
+            ctx.fillRect(215,515,10,10);
+    }}
+    
+    drawships(ctx,0,rotation);
+    
+    function placecheck(ship,pos){
+        check=true;
+        for (i = 0; i < shipstoplace[ship].length; i++){
+            if (shipstoplace[ship][i][0]+pos[0]<yourships.length && shipstoplace[ship][i][0]+pos[0]>=0){
+                if (shipstoplace[ship][i][1]+pos[1]>=yourships[shipstoplace[ship][i][0]+pos[0]].length){
+                    check=false;
+                    console.log('1');
+                }
+                if(shipstoplace[ship][i][1]+pos[1]<0){
+                    check=false;
+                    console.log('2');
+                }
+            }
+            else{
+                check=false;
+                console.log('3');
+            }
+        }
+        console.log(check);
+        if (check==true){
+            for (i = 0; i < shipstoplace[ship].length; i++){
+                yourships[shipstoplace[ship][i][0]+pos[0]][shipstoplace[ship][i][1]+pos[1]]=1;
+        }
+    shiptracker=shiptracker+1;
+        }
+    }
+      
+    function SelectTiles(o){
+    if (phase==1){
+    var x = 0;
+    var y = 0;
+    x = ~~(o[0]/40);
+    y = ~~(o[1]/40);
+    ctx.fillStyle="#ffffff";
+    ctx.fillRect(0,0,1200,600);
+    placecheck(shiptracker,[x,y]);
+    shipboard(yourships,0);
+    if (shiptracker>shipstoplace.length){
+        phase=2;
+    }
+    else{
+        drawships(ctx,shiptracker,rotation);
+    }
+//    MapArray[Quilt[0]][Quilt[1]][2]=false;MapArray[Quilt[0]][Quilt[1]][2]=false;
+//    document.getElementById("ItemList").innerHTML = MapArray[x][y][0];
+//    MapArray[x][y][2]=true;
+//    Quilt=[x,y];
+    }}
+      
+    function getMousePosition(canvas, event) {
+          let rect = canvas.getBoundingClientRect();
+          let x = event.clientX - rect.left;
+          let y = event.clientY - rect.top;
+          var o=[x,y];
+          return(o);
+      }
+    
+    //waits for a click
+          let canvasElem = document.querySelector("canvas");
+          canvasElem.addEventListener("mousedown", function(e) {
+          o=getMousePosition(canvasElem, e);
+          SelectTiles(o);
+      });
+      
+</script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+Point router at computer
+computer gets fixed ip
+open port 80 traffic
+create a shared folder
+install python and flask
+run code from shared folder
